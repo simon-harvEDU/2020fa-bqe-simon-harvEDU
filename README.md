@@ -14,3 +14,9 @@ pipenv shell
 python ./bqe/run_search.py
 python ./bqe/run_wordcloud.py
 ```
+
+
+## 
+example df output for the search "p53 and cancer" 
+
+![Alt text](/example_df.png "df output pubmed p53 and cancer")
