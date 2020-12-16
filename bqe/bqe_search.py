@@ -15,6 +15,9 @@ import re
 from csci_utils.luigi.target import SuffixPreservingLocalTarget
 
 
+# define luigi task for biorxiv search 
+# using here Blair Bilodeau code (https://github.com/blairbilodeau/arxiv-biorxiv-search)
+
 class luigi_biorxivsearch(Task):
     max_records = luigi.IntParameter(default=2)
     gene_list = luigi.ListParameter(default=["p53", "POSTN"])
@@ -38,6 +41,8 @@ class luigi_biorxivsearch(Task):
         df.to_csv(f, sep="\t", encoding="utf-8", index=None)
         f.close()
 
+# define luigi task for biorxiv search 
+# using here https://biopython.org/docs/1.75/api/Bio.Entrez.html
 
 class luigi_pubmedsearch(Task):
     max_records = luigi.IntParameter(default=2)
@@ -62,7 +67,7 @@ class luigi_pubmedsearch(Task):
         df.to_csv(f, sep="\t", encoding="utf-8", index=None)
         f.close()
 
-
+# combining the search from biorxiv and pubmed, defined above 
 class combined_search(Task):
     gene_list = luigi.ListParameter(default=["p53", "POSTN"])
     combination_terms = luigi.ListParameter(default=["cancer"])
@@ -106,6 +111,8 @@ class combined_search(Task):
         df_merged.to_csv(f1, sep="\t", encoding="utf-8", index=None)
         f1.close()
 
+# using here either biomed data base to create a word cloud
+# further improvements could introducing a wordcloud for both data bases 
 
 class graphical_output(Task):
     gene_list = luigi.ListParameter(default=["p53"])
@@ -137,6 +144,8 @@ class graphical_output(Task):
         df = self.input().open("r")
         df = pd.read_csv(df, sep="\t")
         df = df[[col for col in df.columns if "abstract" in col]]
+
+        # select abstracts over titles 
         c_name = (
             str(self.gene_list[0]) + "_" + str(self.combination_terms[0]) + "_abstract"
         )
@@ -144,6 +153,7 @@ class graphical_output(Task):
 
         strings_exclude = self.gene_list + self.combination_terms
 
+        # write data with the io temp path preserver from csci utils
         with self.output().temporary_path() as self.tmp_path:
             word_cloud.mk_wordcloud(
                 test_words, filename_out=self.tmp_path, strings_exclude=strings_exclude
