@@ -256,10 +256,7 @@ class multi_medsearch():
                     df_comb = biomedrxivsearch(kwd=[str(gene) + ' ' + str(combination)], max_records = self.max_records)
                     df_comb = pd.DataFrame(df_comb)
                     
-                    print('Oooooooooo')
-                    print(df_comb.empty)
-                    print(type(df_comb))
-                    print('Oooooooooo')
+                    print('nothing found for this query')
 
                     
                     colname_gene = str(gene) + '_' + str(combination) + '_' + 'title'
