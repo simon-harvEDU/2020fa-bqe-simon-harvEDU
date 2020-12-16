@@ -3,4 +3,11 @@ import bqe_search
 
 from bqe_search import combined_search
 
-build([combined_search(gene_list= ["p53", "CCND1"], combination_terms = ["apoptosis", "cell cycle"])], local_scheduler=True)
+build(
+    [
+        combined_search(
+            gene_list=["p53", "CCND1"], combination_terms=["apoptosis", "cell cycle"]
+        )
+    ],
+    local_scheduler=True,
+)

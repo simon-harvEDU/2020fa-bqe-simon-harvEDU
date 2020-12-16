@@ -23,9 +23,7 @@ def fetch_details(id_list):
     return results
 
 
-def pubmedsearch(
-    target_genes, search_terms, fast_search = True
-):
+def pubmedsearch(target_genes, search_terms, fast_search=True):
     """ get the pubmed count or titles associated with genes and your search term. You can choose between output as count for the number of hits or the abstracts to get back 
     For EXAMPLE: search_terms(your_target_list = ["ABC2", "ABC1"], 
                                 your_search_terms = ["fibrosis"], 
@@ -33,7 +31,7 @@ def pubmedsearch(
 
     # formar and check input:
     # write an assertion statement here
-    #if type(search_terms) != list:
+    # if type(search_terms) != list:
     #    return "please provide the search terms as a list e.g.: ['heart']"
 
     sleep_time = 1
@@ -104,24 +102,22 @@ def pubmedsearch(
             else:  # if there is nothing in the list
                 res_d[str(target) + "_" + term + "_title"] = ["none"]
                 res_d[str(target) + "_" + term + "_abstract"] = ["none"]
-                
+
     res_d = pd.DataFrame.from_dict(res_d, orient="index")
     df = res_d.transpose()
     return df
 
-class multi_pubsearch():
+
+class multi_pubsearch:
     def __init__(self, gene_list, combination_terms, max_records):
         self.max_records = max_records
         self.gene_list = gene_list
         self.combination_terms = combination_terms
         self.df = pd.DataFrame()
-        
+
     def search_pubmed(self):
-        self.df = pubmedsearch(target_genes = self.gene_list , search_terms = self.combination_terms)
-        
+        self.df = pubmedsearch(
+            target_genes=self.gene_list, search_terms=self.combination_terms
+        )
+
         return self.df
-
-
-
-
-
