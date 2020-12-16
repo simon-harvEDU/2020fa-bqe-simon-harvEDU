@@ -26,9 +26,6 @@ class luigi_biorxivsearch(Task):
 
     def run(self):
         df = biorxiv.multi_medsearch(gene_list = self.gene_list , combination_terms = self.combination_terms , max_records = self.max_records).search_biorxiv()
-        #df = biomedrxivsearch(kwd=self.kwd, max_records=self.max_records)
-        print(df)
-        print(type(df))
 
         f = self.output().open("w")
         df.to_csv(f, sep="\t", encoding="utf-8", index=None)
@@ -48,10 +45,6 @@ class luigi_pubmedsearch(Task):
     def run(self):
         print(self.gene_list, self.combination_terms)
         df = pub_search_v1.multi_pubsearch(gene_list = self.gene_list ,  combination_terms = self.combination_terms , max_records = self.max_records).search_pubmed()
-        # df = pub_search_v1.multi_pubsearch(
-        #     gene_list = self.gene_list, combination_terms = self.combination_terms, max_records = self.max_records
-        # ).search_pubmed()
-        #print(df)
         f = self.output().open("w")
         df.to_csv(f, sep="\t", encoding="utf-8", index=None)
         f.close()
