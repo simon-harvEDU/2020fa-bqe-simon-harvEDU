@@ -100,7 +100,7 @@ class graphical_output(Task):
 
     def output(self):
         target = SuffixPreservingLocalTarget(
-            "{}{}_wordcloud.png".format(self.gene_list[0], self.combination_terms[0]),
+            "./data/{}{}_wordcloud.png".format(self.gene_list[0], self.combination_terms[0]),
             format=luigi.format.Nop,
         )
         return target
@@ -116,39 +116,4 @@ class graphical_output(Task):
         strings_exclude = self.gene_list + self.combination_terms
         
         with self.output().temporary_path() as self.tmp_path:
-            word_cloud.mk_wordcloud(test_words, filename_out= "{}{}_wordcloud.png".format(self.gene_list[0], self.combination_terms[0]) ,strings_exclude = strings_exclude)
-
-                    
-                
-
-
-        # # iterate through the csv file 
-        # for val in df.CONTENT: 
-      
-        #     # typecaste each val to string 
-        #     val = str(val) 
-    
-        #     # split the value 
-        #     tokens = val.split() 
-        
-        #     # Converts each token into lowercase 
-        #     for i in range(len(tokens)): 
-        #         tokens[i] = tokens[i].lower() 
-        
-        #     comment_words += " ".join(tokens)+" "
-    
-        # wordcloud = WordCloud(width = 800, height = 800, 
-        #                 background_color ='white', 
-        #                 stopwords = stopwords, 
-        #                 min_font_size = 10).generate(comment_words) 
-        
-        # # plot the WordCloud image                        
-        # plt.figure(figsize = (8, 8), facecolor = None) 
-        # plt.imshow(wordcloud) 
-        # plt.axis("off") 
-        # plt.tight_layout(pad = 0) 
-        
-        # f = self.output().open("w")
-        # plt.savefig(f) 
-
-    
+            word_cloud.mk_wordcloud(test_words, filename_out = self.tmp_path ,strings_exclude = strings_exclude)
